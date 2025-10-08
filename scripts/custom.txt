@@ -1,0 +1,5 @@
+# custom input
+ls /etc
+unknown
+cd /
+exit

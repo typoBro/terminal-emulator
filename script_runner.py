@@ -18,9 +18,17 @@ def run_script(path, out, handle, prompt, destroy):
         if s.startswith("#"):
             continue
         cmds.append(s)
+    stopped = False
+    def wrap_destroy():
+        nonlocal stopped
+        stopped = True
+        destroy()
+    out(prompt)
     for s in cmds:
-        out(prompt + s + "\n")
-        if s.strip() == "exit":
-            destroy()
+        out(s + "\n")
+        handle(s, out, wrap_destroy, prompt, echo_prompt=False)
+        if stopped:
             return
-        handle(s, out, destroy, prompt)
+        out(prompt)
+    if not cmds:
+        return
