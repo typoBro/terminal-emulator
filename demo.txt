@@ -1,0 +1,4 @@
+# demo
+ls
+cd /tmp
+unknown
